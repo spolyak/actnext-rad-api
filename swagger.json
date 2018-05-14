@@ -441,6 +441,57 @@
             "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
           }
         }
+      },
+      "delete" : {
+        "tags" : [ "developers" ],
+        "summary" : "clears current scores submitted by a learner",
+        "description" : "Clears the current scores that a learner has submitted in a hosting            API client platform, e.g. ACT Academy.  \n",
+        "operationId" : "deleteSelfReportedScores",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "pass a required learner id",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success clearing the self reported rcoresesources",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "404" : {
+            "description" : "The specified learner id was not found.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteSelfReportedScores/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "id" : "$input.params('id')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"id\" : \"$input.params('id')\"\n}"
+          }
+        }
       }
     }
   },
