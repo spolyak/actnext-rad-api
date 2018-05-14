@@ -1,1 +1,998 @@
-foo
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "ACTNext Recommendation and Diagnostics API ",
+    "version" : "1.0.0",
+    "title" : "Recommendation and Diagnostics API",
+    "contact" : {
+      "email" : "steve.polyak@act.org"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/ACTNext/rad/1.0.0",
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular RAD API clients"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/recommend" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "fetchs recommended resources based on a learner id and a specified level of a standards collection.",
+        "description" : "The recommender engine retrieves the diagnostic model for a learner id and uses it to personalize a set of recommended Open Educational Resources (OERs). The call can be directed to focus on skills within a particular level of a specified standards collection, e.g. HF or ACT Score report categories (ACTSR). Skip and limit can be used to fetch pages of results.\n ",
+        "operationId" : "recommend",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "pass a required learner id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "collection",
+          "in" : "query",
+          "description" : "pass in the name of a particular collection, e.g. ACTSR or HF",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "pass in the name of a particular level in the specified collection, e.g. Geometry",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "skip",
+          "in" : "query",
+          "description" : "number of resources to skip for pagination",
+          "required" : false,
+          "type" : "integer",
+          "minimum" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "maximum number of resources to return",
+          "required" : false,
+          "type" : "integer",
+          "maximum" : 50,
+          "minimum" : 0,
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "recommendation results matching criteria",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceSetType"
+            }
+          },
+          "400" : {
+            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "404" : {
+            "description" : "The specified learner id was not found.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:recommend/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws_proxy",
+          "parameters" : {
+            "limit" : "$input.params('limit')",
+            "skip" : "$input.params('skip')",
+            "level" : "$input.params('level')",
+            "collection" : "$input.params('collection')",
+            "id" : "$input.params('id')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"limit\" : \"$input.params('limit')\",\n  \"skip\" : \"$input.params('skip')\",\n  \"collection\" : \"$input.params('collection')\",\n  \"level\" : \"$input.params('level')\",\n  \"id\" : \"$input.params('id')\"\n}"
+          }
+        }
+      }
+    },
+    "/recommend_curate" : {
+      "get" : {
+        "tags" : [ "admins" ],
+        "summary" : "fetchs the current curated resources associated with specified level of a standards collection.",
+        "description" : "The recommender engine uses sets of curated resources to assemble personalized results. This method lets admin clients access the current curated resources for the specified standards collection and level. ",
+        "operationId" : "getResource",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "collection",
+          "in" : "query",
+          "description" : "pass in the name of a particular collection, e.g. ACTSR or HF",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "pass in the name of a particular level in the specified collection, e.g. Geometry",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "recommendation results matching criteria",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceSetType"
+            }
+          },
+          "400" : {
+            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "404" : {
+            "description" : "The specified combination of collection and level was not found.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getResource/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws_proxy",
+          "parameters" : {
+            "level" : "$input.params('level')",
+            "collection" : "$input.params('collection')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "admins" ],
+        "summary" : "adds curated resources to a specified collection, level",
+        "description" : "Adds resources to the specified collection, level so that any user will receive these curated recommendations at the beginning of their returned set from /recommend. ",
+        "operationId" : "addResource",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "curations",
+          "description" : "Array of curated resource items to add",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/CurationsType"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "items successfully recorded",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "invalid input, object invalid",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addResource/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws_proxy",
+          "parameters" : {
+            "body" : "$input.body"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "admins" ],
+        "summary" : "clears the current curated resources associated with specified level of a standards collection.",
+        "description" : "The recommender engine uses sets of curated resources to assemble personalized results. This method lets admin clients clear the current curated resources for the specified standards collection and level. ",
+        "operationId" : "deleteResource",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "collection",
+          "in" : "query",
+          "description" : "pass in the name of a particular collection, e.g. ACTSR or HF",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "pass in the name of a particular level in the specified collection, e.g. Geometry",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success clearing the curated resources",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "500" : {
+            "description" : "Unable to clear based on collection and level.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteResource/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws_proxy",
+          "parameters" : {
+            "level" : "$input.params('level')",
+            "collection" : "$input.params('collection')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
+          }
+        }
+      }
+    },
+    "/diagnostics" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "fetchs the current diagnostics based on a learner id and a specified level of a standards collection.",
+        "description" : "The diagnostics call retrieves the diagnostic model for a learner id and sends back the data frm a specified collection and level.\n ",
+        "operationId" : "diagnostics",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "pass a required learner id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "collection",
+          "in" : "query",
+          "description" : "pass in the name of a particular collection, e.g. ACTSR or HF",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "pass in the name of a particular level in the specified collection, e.g. Geometry",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "diagnostics data matching criteria",
+            "schema" : {
+              "$ref" : "#/definitions/DiagnosticsSetType"
+            }
+          },
+          "400" : {
+            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "404" : {
+            "description" : "The specified learner id was not found.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:diagnostics/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws_proxy",
+          "parameters" : {
+            "level" : "$input.params('level')",
+            "id" : "$input.params('id')",
+            "collection" : "$input.params('collection')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"id\" : \"$input.params('id')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
+          }
+        }
+      }
+    },
+    "/self_reported_scores" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "fetchs the current scores that a learner had submitted in a hosting API client platform, e.g. ACT Academy.",
+        "description" : "API Client platforms like ACT Academy allow users to bootstrap their diagnostics by providing reported ratio  scores from an ACT or preACT test attempt. This method fetches those stored scores. \n The currently supported keys include fully qualified entries, e.g.  key='ACTSR.English.ProductionOfWriting' from this hierarchy. \n  ACTSR. \n   &nbsp;&nbsp; English. \n      &nbsp;&nbsp;&nbsp;&nbsp;ProductionOfWriting \n     &nbsp;&nbsp;&nbsp;&nbsp;KnowledgeOfLanguage \n     &nbsp;&nbsp;&nbsp;&nbsp;ConventionsOfStandardEnglish \n   &nbsp;&nbsp; Reading. \n     &nbsp;&nbsp;&nbsp;&nbsp;KeyIdeasDetails \n     &nbsp;&nbsp;&nbsp;&nbsp;CraftStructure \n       &nbsp;&nbsp;&nbsp;&nbsp;IntegrationOfKnowledgeIdeas \n     &nbsp;&nbsp; Science. \n     &nbsp;&nbsp;&nbsp;&nbsp;InterpretationOfData \n     &nbsp;&nbsp;&nbsp;&nbsp;ScientificInvestigation \n     &nbsp;&nbsp;&nbsp;&nbsp;EvaluationOfModelsInferencesExperimentalResults \n   &nbsp;&nbsp; Math. \n     &nbsp;&nbsp;&nbsp;&nbsp;NumberQuantity \n     &nbsp;&nbsp;&nbsp;&nbsp;Algebra \n     &nbsp;&nbsp;&nbsp;&nbsp;Functions \n     &nbsp;&nbsp;&nbsp;&nbsp;Geometry \n     &nbsp;&nbsp;&nbsp;&nbsp;StatisticsProbability \n     &nbsp;&nbsp;&nbsp;&nbsp;IntegratingEssentialSkills \n     &nbsp;&nbsp;&nbsp;&nbsp;Modeling \n",
+        "operationId" : "getSelfReportedScores",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "pass a required learner id",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "current scores from the self-reported input",
+            "schema" : {
+              "$ref" : "#/definitions/SelfReportedScoresResultsType"
+            }
+          },
+          "400" : {
+            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "404" : {
+            "description" : "The specified learner id was not found.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getSelfReportedScores/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws_proxy",
+          "parameters" : {
+            "id" : "$input.params('id')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"id\" : \"$input.params('id')\"\n}"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "developers" ],
+        "summary" : "adds current scores submitted by a learner",
+        "description" : "Adds the current scores that a learner has submitted in a hosting  API client platform, e.g. ACT Academy.  \n The currently supported keys include fully qualified entries, e.g.   key='ACTSR.English.ProductionOfWriting' from this hierarchy. \n  ACTSR. \n   &nbsp;&nbsp; English. \n      &nbsp;&nbsp;&nbsp;&nbsp;ProductionOfWriting \n     &nbsp;&nbsp;&nbsp;&nbsp;KnowledgeOfLanguage \n     &nbsp;&nbsp;&nbsp;&nbsp;ConventionsOfStandardEnglish \n   &nbsp;&nbsp; Reading. \n     &nbsp;&nbsp;&nbsp;&nbsp;KeyIdeasDetails \n     &nbsp;&nbsp;&nbsp;&nbsp;CraftStructure \n       &nbsp;&nbsp;&nbsp;&nbsp;IntegrationOfKnowledgeIdeas \n     &nbsp;&nbsp; Science. \n     &nbsp;&nbsp;&nbsp;&nbsp;InterpretationOfData \n     &nbsp;&nbsp;&nbsp;&nbsp;ScientificInvestigation \n     &nbsp;&nbsp;&nbsp;&nbsp;EvaluationOfModelsInferencesExperimentalResults \n   &nbsp;&nbsp; Math. \n     &nbsp;&nbsp;&nbsp;&nbsp;NumberQuantity \n     &nbsp;&nbsp;&nbsp;&nbsp;Algebra \n     &nbsp;&nbsp;&nbsp;&nbsp;Functions \n     &nbsp;&nbsp;&nbsp;&nbsp;Geometry \n     &nbsp;&nbsp;&nbsp;&nbsp;StatisticsProbability \n     &nbsp;&nbsp;&nbsp;&nbsp;IntegratingEssentialSkills \n     &nbsp;&nbsp;&nbsp;&nbsp;Modeling \n",
+        "operationId" : "addSelfReportedScores",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "scores",
+          "description" : "Array of curated resource items to add",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SelfReportedScoresSetType"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "scores successfully recorded",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "invalid input, object invalid",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addSelfReportedScores/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws_proxy",
+          "parameters" : {
+            "body" : "$input.body"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CCLTILinkType" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/LTILinkType"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "cartridge_bundle" : {
+            "$ref" : "#/definitions/LTILinkResourceRefType"
+          },
+          "cartridge_icon" : {
+            "$ref" : "#/definitions/LTILinkResourceRefType"
+          },
+          "metadata" : {
+            "$ref" : "#/definitions/MetadataType"
+          }
+        }
+      } ],
+      "description" : "The extended set of information used to define the presence of an LTI Link resource (this is based upon the definition for including an LTI link inside an IMS Common Cartridge or IMS Thin Common Cartridge)."
+    },
+    "LTILinkType" : {
+      "type" : "object",
+      "required" : [ "title", "vendor" ],
+      "properties" : {
+        "title" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The human readable title/label for the activity being addressed by the content available through the LTI link."
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = String. A human readable description of the activity addressed by the content supplied via the LTI link."
+        },
+        "custom" : {
+          "$ref" : "#/definitions/PropertySetType"
+        },
+        "extensions" : {
+          "$ref" : "#/definitions/PlatformPropertySetType"
+        },
+        "launch_url" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. The URL for the LTI launch. One of either the launch_url or the secure_launch_url must be specified. It is acceptable to specify both and if both are specified, the Tool Consumer (TC) decides which to use. Typically, the TC will use a secure_launch_url when embedding the Tool in a secure page and the launch_url when embedding the tool in a non-secure page. So, it is important that the Tool Provider (TP) provides the same functionality whether the launch_url or secure_launch_url is used."
+        },
+        "secure_launch_url" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. A secure URL for the LTI launch. One of either the launch_url or the secure_launch_url must be specified. It is acceptable to specify both and if both are specified, the Tool Consumer (TC) decides which to use. Typically, the TC will use a secure_launch_url when embedding the Tool in a secure page and the launch_url when embedding the tool in a non-secure page. So, it is important that the Tool Provider (TP) provides the same functionality whether the launch_url or secure_launch_url is used."
+        },
+        "icon" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. A URL to an icon for this tool."
+        },
+        "secure_icon" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. A secure URL to an icon for this tool."
+        },
+        "vendor" : {
+          "$ref" : "#/definitions/VendorType"
+        }
+      },
+      "description" : "The container for all of the core information about an LTI Link. "
+    },
+    "imsxCodeMinorFieldType" : {
+      "type" : "object",
+      "required" : [ "imsx_codeMinorFieldName", "imsx_codeMinorFieldValue" ],
+      "properties" : {
+        "imsx_codeMinorFieldName" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. This should contain the identity of the system that has produced the code minor status code report."
+        },
+        "imsx_codeMinorFieldValue" : {
+          "type" : "string",
+          "description" : "The code minor status code (this is a value from the corresponding enumerated vocabulary).",
+          "enum" : [ "fullsuccess", "forbidden", "invalidqueryparameter", "unauthorisedrequest", "internal_server_error", "server_busy", "invaliddata" ]
+        }
+      },
+      "description" : "This is the container for a single code minor status code."
+    },
+    "PropertyType" : {
+      "type" : "object",
+      "required" : [ "name", "value" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The name of the key for the property."
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The value for the property."
+        }
+      },
+      "description" : "The container for the name/value pair for a specific property."
+    },
+    "imsxStatusInfoType" : {
+      "type" : "object",
+      "required" : [ "imsx_codeMajor", "imsx_severity" ],
+      "properties" : {
+        "imsx_codeMajor" : {
+          "type" : "string",
+          "description" : "The code major value (from the corresponding enumerated vocabulary).",
+          "enum" : [ "success", "processing", "failure", "unsupported" ]
+        },
+        "imsx_severity" : {
+          "type" : "string",
+          "description" : "The severity value (from the corresponding enumerated vocabulary).",
+          "enum" : [ "status", "warning", "error" ]
+        },
+        "imsx_description" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = String. A human readable description supplied by the entity creating the status code information."
+        },
+        "imsx_codeMinor" : {
+          "$ref" : "#/definitions/imsxCodeMinorType"
+        }
+      }
+    },
+    "LTILinkResourceRefType" : {
+      "type" : "object",
+      "required" : [ "name", "resourceUri" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The name of the type of content supplied by the link."
+        },
+        "resourceUri" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. The URI for the link."
+        }
+      },
+      "description" : "The container for the link information."
+    },
+    "MetadataType" : {
+      "type" : "object",
+      "properties" : {
+        "curriculumStandardsMetadataSet" : {
+          "$ref" : "#/definitions/CSMSetType"
+        }
+      },
+      "description" : "The container for all of the metadata associate with the LTI link. Currently this is metadata is restricted to the set of curriculum standards annotation."
+    },
+    "imsxCodeMinorType" : {
+      "type" : "object",
+      "required" : [ "imsx_codeMinorField" ],
+      "properties" : {
+        "imsx_codeMinorField" : {
+          "type" : "array",
+          "description" : "Each reported code minor status code.",
+          "items" : {
+            "$ref" : "#/definitions/imsxCodeMinorFieldType"
+          },
+          "minItems" : 1
+        }
+      },
+      "description" : "This is the container for the set of code minor status codes reported in the responses from the Service Provider."
+    },
+    "PropertySetType" : {
+      "type" : "object",
+      "required" : [ "properties" ],
+      "properties" : {
+        "properties" : {
+          "type" : "array",
+          "description" : "The set of properties for the identified platform or orginal authoring platform.",
+          "items" : {
+            "$ref" : "#/definitions/PropertyType"
+          },
+          "minItems" : 1
+        }
+      },
+      "description" : "The container for the collection of properties that have been specified."
+    },
+    "VendorType" : {
+      "type" : "object",
+      "required" : [ "code", "name" ],
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. An identification code for the vendor."
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The name of the vendor."
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = String. A human readable description of the vendor."
+        },
+        "url" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. A URL for the vendor."
+        },
+        "emailContact" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. Contact email for the vendor."
+        }
+      },
+      "description" : "The container for the information about the vendor who created the resource."
+    },
+    "LearningObjectivesType" : {
+      "type" : "object",
+      "required" : [ "alignmentType" ],
+      "properties" : {
+        "alignmentType" : {
+          "type" : "string",
+          "description" : "A category of alignment between the learning resource and the framework node.",
+          "enum" : [ "assesses", "teaches", "requires", "textComplexity", "readingLevel", "educationalSubject", "educationLevel" ]
+        },
+        "educationalFramework" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The framework to which the resource being described is aligned."
+        },
+        "targetDescription" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The description of a node in an established educational framework."
+        },
+        "targetName" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The name of a node in an established educational framework."
+        },
+        "targetURL" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. The URL of a node in an established educational framework."
+        },
+        "caseItemUri" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. Reference to a CASE CFItem for a standard or skill."
+        },
+        "caseItemGUID" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. Reference to CASE CFItem as a GUID"
+        }
+      },
+      "description" : "The container for the learning objectives which are addressed by the resource."
+    },
+    "PlatformPropertySetType" : {
+      "type" : "object",
+      "required" : [ "platform", "properties" ],
+      "properties" : {
+        "platform" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The identifier for the authoring environment."
+        },
+        "properties" : {
+          "type" : "array",
+          "description" : "The set of extension properties for the identified platform.",
+          "items" : {
+            "$ref" : "#/definitions/PropertyType"
+          },
+          "minItems" : 1
+        }
+      },
+      "description" : "The container for the collection of properties that are available for a specific platform."
+    },
+    "ResourceSetType" : {
+      "type" : "object",
+      "properties" : {
+        "resources" : {
+          "type" : "array",
+          "description" : "The actual resources supplied by the service provider. The order of resources is not significant.",
+          "items" : {
+            "$ref" : "#/definitions/ResourceType"
+          },
+          "minItems" : 0
+        }
+      },
+      "description" : "The container for the set of resources that have been supplied by the service provider. This may be empty if none of the resources fulfill the search criteria. The order of resources is not significant."
+    },
+    "SelfReportedScoresSetType" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "The learner id"
+        },
+        "scores" : {
+          "type" : "array",
+          "description" : "The self reported scores reported by a learner.",
+          "items" : {
+            "$ref" : "#/definitions/SelfReportedScoreType"
+          },
+          "minItems" : 0
+        }
+      },
+      "description" : "The container for a set of self reported scores provided by a learner in a RAD API client platform, e.g. ACT Academy."
+    },
+    "SelfReportedScoresResultsType" : {
+      "type" : "object",
+      "properties" : {
+        "scores" : {
+          "type" : "array",
+          "description" : "The self reported scores reported by a learner.",
+          "items" : {
+            "$ref" : "#/definitions/SelfReportedScoreType"
+          },
+          "minItems" : 0
+        }
+      },
+      "description" : "The container for a set of self reported scores provided by a learner in a RAD API client platform, e.g. ACT Academy."
+    },
+    "SelfReportedScoreType" : {
+      "type" : "object",
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "The key of a self reported score. We use the format of  collection and level, e.g. ACTSR.Geometry "
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "The value of a self reported score. Typically this will  be a simple ratio percentage integer, e.g. 30 or 50, etc."
+        }
+      }
+    },
+    "TextComplexityType" : {
+      "type" : "object",
+      "required" : [ "name", "value" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "The name of the complexity measure. This is taken from an enumerated vocabulary.",
+          "enum" : [ "Lexile", "Flesch-Kincaid", "Dale-Schall", "DRA", "Fountas-Pinnell", "caseItemUri" ]
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The text complexity measure in terms of the named measuring scale."
+        }
+      },
+      "description" : "The name/pair value container for a text complexity annotation."
+    },
+    "ResourceType" : {
+      "type" : "object",
+      "required" : [ "learningResourceType", "name", "publisher" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. The name/title of resource."
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. A human readable description of the contents of the resource."
+        },
+        "subject" : {
+          "type" : "array",
+          "description" : "Model Primitive Datatype = NormalizedString. The subject(s) of the resource. May have multiple subjects tagged.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "url" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. How to access resource over Internet e.g. HTTP, FTP, etc. A resource must have either a URL or or a LTI Link."
+        },
+        "ltiLink" : {
+          "$ref" : "#/definitions/CCLTILinkType"
+        },
+        "learningResourceType" : {
+          "type" : "array",
+          "description" : "The type of the resource. There may be multiple types.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 1
+        },
+        "language" : {
+          "type" : "array",
+          "description" : "Model Primitive Datatype = Language. The languages used in the resource. International two digit code for language e.g. 'en' for English. Use the [RFC 3066] annotation.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "thumbnailUrl" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. Link to a thumbnail representing resource."
+        },
+        "typicalAgeRange" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. Age of the typical intended user. This is described as the minimum and maximum ages. The format is '11-12', '5-7', etc."
+        },
+        "textComplexity" : {
+          "type" : "array",
+          "description" : "A number indicating text complexity based on number of established measures.",
+          "items" : {
+            "$ref" : "#/definitions/TextComplexityType"
+          },
+          "minItems" : 0
+        },
+        "learningObjectives" : {
+          "type" : "array",
+          "description" : "The set of learning objectives addressed by the resource.",
+          "items" : {
+            "$ref" : "#/definitions/LearningObjectivesType"
+          },
+          "minItems" : 0
+        },
+        "author" : {
+          "type" : "array",
+          "description" : "Model Primitive Datatype = NormalizedString. Author or creator of the resource.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "publisher" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. Owner of the rights to the resource or who made it available (company or person)."
+        },
+        "useRightsURL" : {
+          "type" : "string",
+          "format" : "uri",
+          "description" : "Model Primitive Datatype = AnyURI. URL describing how resource can be licensed. Could be Creative Commons license link or link to other specific open or proprietary license."
+        },
+        "timeRequired" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = Duration. Time that the resource takes to consume. Use the [ISO 8601] format for a duration."
+        },
+        "technicalFormat" : {
+          "type" : "string",
+          "description" : "Model Primitive Datatype = NormalizedString. A valid MIME type format for the resource e.g. text, HTML, PDF, MPEG, MP3, etc. See https://www.iana.org/assignments/media-types/media-types.xhtml."
+        },
+        "educationalAudience" : {
+          "type" : "array",
+          "description" : "For whom the resource is intended.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "accessibilityAPI" : {
+          "type" : "array",
+          "description" : "Which (if any) accessibility API is supported by the resource.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "accessibilityInputMethod" : {
+          "type" : "array",
+          "description" : "How the resource can be controlled by the user, which includes full keyboard controllability, mouse controllability, and voice controllability.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "accessibilityFeatures" : {
+          "type" : "array",
+          "description" : "Model Primitive Datatype = NormalizedString. These include alternatives and listed enhancements for the resource. These can be transformation features, navigation features, control features or augmentation features.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "accessibilityHazards" : {
+          "type" : "array",
+          "description" : "The set of accessibility hazards which are encountered when using this resource.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "accessMode" : {
+          "type" : "array",
+          "description" : "The human sensory perceptual system or cognitive faculty through which a person may process or perceive information.",
+          "items" : {
+            "type" : "string"
+          },
+          "minItems" : 0
+        },
+        "publishDate" : {
+          "type" : "string",
+          "format" : "date",
+          "description" : "Model Primitive Datatype = Date. Date the resource was published by the publisher. The 'date' using the [ISO 8601] format."
+        },
+        "rating" : {
+          "type" : "string",
+          "description" : "A rating of the quality of the resource determined by the Search Provider. Often derived from crowdsource ratings.",
+          "enum" : [ "1", "2", "3", "4", "5" ]
+        },
+        "relevance" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Model Primitive Datatype = Float. This is a floating point value based on relevance to the specific search. Higher relevance has a higher number."
+        }
+      },
+      "description" : "The container for the information about a resource that is supported by a LOR."
+    },
+    "CSMSetType" : {
+      "type" : "object",
+      "description" : "This is the container for the set of curriculum standards metadata. [[ ED NOTE - Should this be supported? ]]"
+    },
+    "CurationsType" : {
+      "type" : "object",
+      "properties" : {
+        "collection" : {
+          "type" : "string"
+        },
+        "level" : {
+          "type" : "string"
+        },
+        "resources" : {
+          "type" : "array",
+          "description" : "The resources to recommend for the specified collection/level",
+          "items" : {
+            "$ref" : "#/definitions/ResourceType"
+          },
+          "minItems" : 0
+        }
+      },
+      "description" : "The container for the set of resources that have been supplied by the curator."
+    },
+    "DiagnosticsSetType" : {
+      "type" : "object",
+      "properties" : {
+        "diagnostics" : {
+          "type" : "array",
+          "description" : "The actual diagnostics supplied by the service provider. The order of diagnostics is not significant.",
+          "items" : {
+            "$ref" : "#/definitions/DiagnosticsType"
+          },
+          "minItems" : 0
+        }
+      },
+      "description" : "The container for the set of diagnostics that have been supplied by the service provider. \n"
+    },
+    "DiagnosticsType" : {
+      "type" : "object",
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "A code representing a level in a collection, e.g. HF.A.MATH"
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "A numeric diagnostic value based on the model output"
+        },
+        "stars" : {
+          "type" : "string",
+          "description" : "A representation of number of stars for a learner in this level"
+        }
+      },
+      "description" : "The container for the set of diagnostics that have been supplied by the service provider. \n"
+    }
+  },
+  "x-aws-api-id" : "pyjsm5jo4e"
+}
