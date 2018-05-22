@@ -1015,6 +1015,10 @@
     "DiagnosticsSetType" : {
       "type" : "object",
       "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "The learner id"
+        },
         "diagnostics" : {
           "type" : "array",
           "description" : "The actual diagnostics supplied by the service provider. The order of diagnostics is not significant.",
