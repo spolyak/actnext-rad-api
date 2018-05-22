@@ -70,7 +70,7 @@
           "200" : {
             "description" : "recommendation results matching criteria",
             "schema" : {
-              "$ref" : "#/definitions/ResourceSetType"
+              "$ref" : "#/definitions/RecommendationsSetType"
             }
           },
           "400" : {
@@ -753,9 +753,43 @@
       },
       "description" : "The container for the collection of properties that are available for a specific platform."
     },
+    "RecommendationsSetType" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "The learner id"
+        },
+        "collection" : {
+          "type" : "string",
+          "description" : "A code representing a standards collection, e.g. ACTSR, HF"
+        },
+        "level" : {
+          "type" : "string",
+          "description" : "A code representing a level in a collection, e.g. HF.A.MATH"
+        },
+        "resources" : {
+          "type" : "array",
+          "description" : "The actual resources supplied by the service provider. The order of resources is not significant.",
+          "items" : {
+            "$ref" : "#/definitions/ResourceType"
+          },
+          "minItems" : 0
+        }
+      },
+      "description" : "The container for the set of resources that have been supplied by the service provider. This may be empty if none of the resources fulfill the search criteria. The order of resources is not significant."
+    },
     "ResourceSetType" : {
       "type" : "object",
       "properties" : {
+        "collection" : {
+          "type" : "string",
+          "description" : "A code representing a standards collection, e.g. ACTSR, HF"
+        },
+        "level" : {
+          "type" : "string",
+          "description" : "A code representing a level in a collection, e.g. HF.A.MATH"
+        },
         "resources" : {
           "type" : "array",
           "description" : "The actual resources supplied by the service provider. The order of resources is not significant.",
@@ -788,6 +822,10 @@
     "SelfReportedScoresResultsType" : {
       "type" : "object",
       "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "The learner id"
+        },
         "scores" : {
           "type" : "array",
           "description" : "The self reported scores reported by a learner.",
