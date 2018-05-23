@@ -74,9 +74,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           },
           "404" : {
@@ -137,9 +137,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           },
           "404" : {
@@ -192,9 +192,9 @@
             }
           },
           "400" : {
-            "description" : "invalid input, object invalid",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. bad input body.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           }
         },
@@ -243,9 +243,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           },
           "500" : {
@@ -309,9 +309,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           },
           "404" : {
@@ -364,9 +364,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           },
           "404" : {
@@ -418,9 +418,9 @@
             }
           },
           "400" : {
-            "description" : "invalid input, object invalid",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           }
         },
@@ -463,9 +463,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           },
           "404" : {
@@ -522,9 +522,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           }
         },
@@ -575,9 +575,9 @@
             }
           },
           "400" : {
-            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
             "schema" : {
-              "$ref" : "#/definitions/imsxStatusInfoType"
+              "$ref" : "#/definitions/AWSParameterValidation"
             }
           }
         },
@@ -602,6 +602,16 @@
     }
   },
   "definitions" : {
+    "AWSParameterValidation" : {
+      "type" : "object",
+      "required" : [ "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "Message from AWS parameter validation."
+        }
+      }
+    },
     "CCLTILinkType" : {
       "allOf" : [ {
         "$ref" : "#/definitions/LTILinkType"
