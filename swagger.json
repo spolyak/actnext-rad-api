@@ -457,7 +457,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "success clearing the self reported rcoresesources",
+            "description" : "success clearing the self reported score resources",
             "schema" : {
               "$ref" : "#/definitions/imsxStatusInfoType"
             }
@@ -485,6 +485,59 @@
             }
           },
           "type" : "aws_proxy",
+          "parameters" : {
+            "id" : "$input.params('id')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"id\" : \"$input.params('id')\"\n}"
+          }
+        }
+      }
+    },
+    "/init_diagnostics" : {
+      "put" : {
+        "tags" : [ "developers" ],
+        "summary" : "initializes the diagnostic state for the specified learner id if it doesn't exist, otherwise ignores the request.",
+        "description" : "Takes the specified learner id and determines if the API has already initialized the            diagnostic state for the id. If so, the request is ignored, otherwise the diagnostic            state is saved.\n",
+        "operationId" : "initDiagnostics",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "pass a required learner id",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The diagnostics state was already initialized for the learner id.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "201" : {
+            "description" : "The diagnostics state has been initialized for the specified learner id.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "The request was not correctly formed i.e. 'bad input parameter'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:initDiagnostics/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
           "parameters" : {
             "id" : "$input.params('id')"
           },
