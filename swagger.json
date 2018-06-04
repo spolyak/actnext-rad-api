@@ -275,6 +275,172 @@
         }
       }
     },
+    "/recommend_cache" : {
+      "get" : {
+        "tags" : [ "admins" ],
+        "summary" : "fetchs the current cached resources associated with specified level of a standards collection.",
+        "description" : "The recommender engine uses sets of cached resources to assemble personalized results. This method lets caching clients access the current cached resources for the specified standards collection and level. ",
+        "operationId" : "getCachedResource",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "collection",
+          "in" : "query",
+          "description" : "pass in the name of a particular collection, e.g. ACTSR or HF",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "pass in the name of a particular level in the specified collection, e.g. Geometry",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "recommendation results matching criteria",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceSetType"
+            }
+          },
+          "400" : {
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
+            "schema" : {
+              "$ref" : "#/definitions/AWSParameterValidation"
+            }
+          },
+          "404" : {
+            "description" : "The specified combination of collection and level was not found.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getCachedResource/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "level" : "$input.params('level')",
+            "collection" : "$input.params('collection')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "admins" ],
+        "summary" : "adds cached resources to a specified collection, level",
+        "description" : "Adds cached resources to the specified collection, level so that a user could receive these cached recommendations in their returned set from /recommend. ",
+        "operationId" : "addCachedResource",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "curations",
+          "description" : "Array of cached resource items to add",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/CurationsType"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "items successfully recorded",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. bad input body.",
+            "schema" : {
+              "$ref" : "#/definitions/AWSParameterValidation"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addCachedResource/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "body" : "$input.body"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "admins" ],
+        "summary" : "clears the current cached resources associated with specified level of a standards collection.",
+        "description" : "The recommender engine uses sets of cached resources to assemble personalized results. This method lets admin clients clear the current cached resources for the specified standards collection and level. ",
+        "operationId" : "deleteCachedResource",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "collection",
+          "in" : "query",
+          "description" : "pass in the name of a particular collection, e.g. ACTSR or HF",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "level",
+          "in" : "query",
+          "description" : "pass in the name of a particular level in the specified collection, e.g. Geometry",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success clearing the cached resources",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. 'bad input parameter'.",
+            "schema" : {
+              "$ref" : "#/definitions/AWSParameterValidation"
+            }
+          },
+          "500" : {
+            "description" : "Unable to clear based on collection and level.",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteCachedResource/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "level" : "$input.params('level')",
+            "collection" : "$input.params('collection')"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
+          }
+        }
+      }
+    },
     "/diagnostics" : {
       "get" : {
         "tags" : [ "developers" ],
