@@ -324,7 +324,7 @@
               "statusCode" : "200"
             }
           },
-          "type" : "aws",
+          "type" : "aws_proxy",
           "parameters" : {
             "level" : "$input.params('level')",
             "collection" : "$input.params('collection')"
@@ -373,7 +373,7 @@
               "statusCode" : "200"
             }
           },
-          "type" : "aws",
+          "type" : "aws_proxy",
           "parameters" : {
             "body" : "$input.body"
           },
@@ -430,7 +430,7 @@
               "statusCode" : "200"
             }
           },
-          "type" : "aws",
+          "type" : "aws_proxy",
           "parameters" : {
             "level" : "$input.params('level')",
             "collection" : "$input.params('collection')"
