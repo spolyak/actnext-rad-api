@@ -538,6 +538,23 @@
               "$ref" : "#/definitions/AWSParameterValidation"
             }
           }
+        },
+        "x-amazon-apigateway-integration" : {
+          "passthroughBehavior" : "when_no_match",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:submitScores/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "type" : "aws",
+          "parameters" : {
+            "body" : "$input.body"
+          },
+          "requestTemplates" : {
+            "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
+          }
         }
       }
     },
@@ -1437,7 +1454,8 @@
       "description" : "The container for a Caliper sensor event. \n"
     },
     "CaliperEventType" : {
-      "discriminator" : "type",
+      "type" : "object",
+      "required" : [ "type" ],
       "properties" : {
         "@context" : {
           "type" : "string"
@@ -1548,8 +1566,7 @@
             }
           }
         }
-      },
-      "required" : [ "type" ]
+      }
     }
   },
   "x-amazon-apigateway-request-validators" : {
