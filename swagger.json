@@ -508,6 +508,39 @@
         }
       }
     },
+    "/submit_scores" : {
+      "post" : {
+        "tags" : [ "developers" ],
+        "summary" : "processes AssessmentItemEvents with a submitted Caliper sensor event",
+        "description" : "Parses a posted Caliper sensor event to locate the AssessmentItemEvents and then invokes the Diagnostic Enginein order to update a learner's diagnostic data \n",
+        "operationId" : "submitScores",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "sensorEvents",
+          "description" : "Array of sensor events to process",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SensorType"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "sensor events successfully processed",
+            "schema" : {
+              "$ref" : "#/definitions/imsxStatusInfoType"
+            }
+          },
+          "400" : {
+            "description" : "[API Gateway Generated]: The request was not correctly formed i.e. bad input body.",
+            "schema" : {
+              "$ref" : "#/definitions/AWSParameterValidation"
+            }
+          }
+        }
+      }
+    },
     "/self_reported_scores" : {
       "get" : {
         "tags" : [ "developers" ],
@@ -1367,6 +1400,191 @@
         }
       },
       "description" : "The container for the set of diagnostics that have been supplied by the service provider. \n"
+    },
+    "SensorType" : {
+      "type" : "array",
+      "description" : "An array of sensor events sent via a Caliper feed.",
+      "items" : {
+        "$ref" : "#/definitions/SensorEventType"
+      },
+      "minItems" : 0
+    },
+    "SensorEventType" : {
+      "type" : "object",
+      "properties" : {
+        "sensor" : {
+          "type" : "string",
+          "description" : "A string representing the sensor id"
+        },
+        "sendTime" : {
+          "type" : "string",
+          "format" : "date",
+          "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
+        },
+        "dataVersion" : {
+          "type" : "string",
+          "description" : "A representation of number of stars for a learner in this level"
+        },
+        "data" : {
+          "type" : "array",
+          "description" : "An array of sensor events sent via a Caliper feed.",
+          "items" : {
+            "$ref" : "#/definitions/CaliperEventType"
+          },
+          "minItems" : 0
+        }
+      },
+      "description" : "The container for a Caliper sensor event. \n"
+    },
+    "CaliperEventType" : {
+      "discriminator" : "type",
+      "properties" : {
+        "@context" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "actor" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "type" : {
+              "type" : "string"
+            }
+          }
+        },
+        "edApp" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            }
+          }
+        },
+        "group" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "type" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "action" : {
+          "type" : "string"
+        },
+        "object" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "type" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            },
+            "learningObjectives" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              },
+              "minItems" : 0
+            }
+          }
+        },
+        "eventTime" : {
+          "type" : "string",
+          "format" : "date",
+          "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
+        }
+      },
+      "required" : [ "type" ]
+    },
+    "CaliperAssessmentEventType" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/CaliperEventType"
+      } ],
+      "properties" : {
+        "generated" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "type" : {
+              "type" : "string"
+            },
+            "startedAtTime" : {
+              "type" : "string",
+              "format" : "date",
+              "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
+            },
+            "endedAtTime" : {
+              "type" : "string",
+              "format" : "date",
+              "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
+            }
+          }
+        }
+      }
+    },
+    "CaliperAssessmentItemEventType" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/CaliperEventType"
+      } ],
+      "properties" : {
+        "generated" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "type" : {
+              "type" : "string"
+            },
+            "startedAtTime" : {
+              "type" : "string",
+              "format" : "date",
+              "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
+            },
+            "endedAtTime" : {
+              "type" : "string",
+              "format" : "date",
+              "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
+            },
+            "attempt" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "type" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "value" : {
+              "type" : "string"
+            },
+            "score" : {
+              "type" : "integer"
+            }
+          }
+        }
+      }
     }
   },
   "x-amazon-apigateway-request-validators" : {
