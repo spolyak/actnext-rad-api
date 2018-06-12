@@ -548,7 +548,7 @@
               "statusCode" : "200"
             }
           },
-          "type" : "aws",
+          "type" : "aws_proxy",
           "parameters" : {
             "body" : "$input.body"
           },
