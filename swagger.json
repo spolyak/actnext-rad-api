@@ -1509,43 +1509,7 @@
           "type" : "string",
           "format" : "date",
           "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
-        }
-      },
-      "required" : [ "type" ]
-    },
-    "CaliperAssessmentEventType" : {
-      "allOf" : [ {
-        "$ref" : "#/definitions/CaliperEventType"
-      } ],
-      "properties" : {
-        "generated" : {
-          "type" : "object",
-          "properties" : {
-            "id" : {
-              "type" : "string"
-            },
-            "type" : {
-              "type" : "string"
-            },
-            "startedAtTime" : {
-              "type" : "string",
-              "format" : "date",
-              "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
-            },
-            "endedAtTime" : {
-              "type" : "string",
-              "format" : "date",
-              "description" : "A formatted timestamp 2018-06-08T16:17:00.550Z"
-            }
-          }
-        }
-      }
-    },
-    "CaliperAssessmentItemEventType" : {
-      "allOf" : [ {
-        "$ref" : "#/definitions/CaliperEventType"
-      } ],
-      "properties" : {
+        },
         "generated" : {
           "type" : "object",
           "properties" : {
@@ -1584,7 +1548,8 @@
             }
           }
         }
-      }
+      },
+      "required" : [ "type" ]
     }
   },
   "x-amazon-apigateway-request-validators" : {
