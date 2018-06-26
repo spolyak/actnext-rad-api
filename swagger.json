@@ -86,6 +86,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -149,6 +150,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -255,6 +257,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -315,6 +318,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -421,6 +425,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -487,6 +492,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -592,6 +598,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -691,6 +698,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -744,6 +752,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -797,6 +806,7 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -1579,6 +1589,5 @@
       "validateRequestParameters" : true
     }
   },
-  "x-amazon-apigateway-request-validator" : "basic",
   "x-aws-api-id" : "pyjsm5jo4e"
 }
