@@ -90,7 +90,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:recommend/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:recommend${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -154,7 +154,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getResource/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getResource${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -203,7 +203,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addResource/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addResource${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -261,7 +261,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteResource/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteResource${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -322,7 +322,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getCachedResource/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getCachedResource${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -371,7 +371,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addCachedResource/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addCachedResource${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -429,7 +429,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteCachedResource/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteCachedResource${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -496,7 +496,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:diagnostics/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:diagnostics${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -602,7 +602,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getSelfReportedScores/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:getSelfReportedScores${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -650,7 +650,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addSelfReportedScores/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:addSelfReportedScores${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -702,7 +702,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteSelfReportedScores/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:deleteSelfReportedScores${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -756,7 +756,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:initDiagnostics/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:initDiagnostics${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -810,7 +810,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:resetDiagnostics/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:resetDiagnostics${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
