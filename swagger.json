@@ -519,7 +519,7 @@
         "tags" : [ "developers" ],
         "summary" : "processes AssessmentItemEvents with a submitted Caliper sensor event",
         "description" : "Parses a posted Caliper sensor event to locate the AssessmentItemEvents and then invokes the Diagnostic Enginein order to update a learner's diagnostic data \n",
-        "operationId" : "submitScores${stageVariables.env}",
+        "operationId" : "submitScores",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -548,7 +548,7 @@
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
-          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:submitScores/invocations",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:980592491844:function:submitScores${stageVariables.env}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
