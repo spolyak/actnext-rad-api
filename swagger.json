@@ -519,7 +519,7 @@
         "tags" : [ "developers" ],
         "summary" : "processes AssessmentItemEvents with a submitted Caliper sensor event",
         "description" : "Parses a posted Caliper sensor event to locate the AssessmentItemEvents and then invokes the Diagnostic Enginein order to update a learner's diagnostic data \n",
-        "operationId" : "submitScores",
+        "operationId" : "submitScores${stageVariables.env}",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
