@@ -163,6 +163,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -213,6 +216,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -270,6 +276,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -331,6 +340,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -381,6 +393,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -438,6 +453,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -505,6 +523,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -558,6 +579,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -611,6 +635,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -660,6 +687,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
           "httpMethod" : "POST",
@@ -711,6 +741,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -765,6 +798,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
@@ -819,6 +855,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
