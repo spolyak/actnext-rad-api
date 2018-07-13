@@ -14,6 +14,16 @@
   },
   "host" : "virtserver.swaggerhub.com",
   "basePath" : "/ACTNext/rad/1.0.0",
+  "security" : [ {
+    "api_key" : [ ]
+  } ],
+  "securityDefinitions" : {
+    "api_key" : {
+      "type" : "apiKey",
+      "name" : "x-api-key",
+      "in" : "header"
+    }
+  },
   "tags" : [ {
     "name" : "admins",
     "description" : "Secured Admin-only calls"
