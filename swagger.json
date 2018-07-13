@@ -96,6 +96,9 @@
             }
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "x-amazon-apigateway-request-validator" : "basic",
         "x-amazon-apigateway-integration" : {
           "passthroughBehavior" : "when_no_match",
