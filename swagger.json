@@ -502,6 +502,12 @@
           "description" : "pass in the name of a particular level in the specified collection, e.g. Geometry",
           "required" : false,
           "type" : "string"
+        }, {
+          "name" : "hfexpand",
+          "in" : "query",
+          "description" : "when using the ACTSR collection, do you want to turn on HF expansion for diagnostics e.g. true, false",
+          "required" : false,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
