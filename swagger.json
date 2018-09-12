@@ -14,16 +14,6 @@
   },
   "host" : "virtserver.swaggerhub.com",
   "basePath" : "/ACTNext/rad/1.0.0",
-  "security" : [ {
-    "api_key" : [ ]
-  } ],
-  "securityDefinitions" : {
-    "api_key" : {
-      "type" : "apiKey",
-      "name" : "x-api-key",
-      "in" : "header"
-    }
-  },
   "tags" : [ {
     "name" : "admins",
     "description" : "Secured Admin-only calls"
@@ -32,6 +22,9 @@
     "description" : "Operations available to regular RAD API clients"
   } ],
   "schemes" : [ "https" ],
+  "security" : [ {
+    "api_key" : [ ]
+  } ],
   "paths" : {
     "/recommend" : {
       "get" : {
@@ -119,6 +112,50 @@
           },
           "requestTemplates" : {
             "application/json" : "{\n  \"limit\" : \"$input.params('limit')\",\n  \"skip\" : \"$input.params('skip')\",\n  \"collection\" : \"$input.params('collection')\",\n  \"level\" : \"$input.params('level')\",\n  \"id\" : \"$input.params('id')\"\n}"
+          }
+        }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "recommendOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
           }
         }
       }
@@ -298,6 +335,50 @@
             "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
           }
         }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "recommend_curateOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
+          }
+        }
       }
     },
     "/recommend_cache" : {
@@ -475,6 +556,50 @@
             "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
           }
         }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "recommend_cacheOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
+          }
+        }
       }
     },
     "/diagnostics" : {
@@ -552,6 +677,50 @@
             "application/json" : "{\n  \"level\" : \"$input.params('level')\",\n  \"id\" : \"$input.params('id')\",\n  \"collection\" : \"$input.params('collection')\"\n}"
           }
         }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "diagnosticsOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
+          }
+        }
       }
     },
     "/submit_scores" : {
@@ -603,6 +772,50 @@
           },
           "requestTemplates" : {
             "application/json" : "{\n  \"body\" : \"$input.body\"\n}"
+          }
+        }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "submit_scoresOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
           }
         }
       }
@@ -768,6 +981,50 @@
             "application/json" : "{\n  \"id\" : \"$input.params('id')\"\n}"
           }
         }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "self_reported_scoresOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
+          }
+        }
       }
     },
     "/init_diagnostics" : {
@@ -823,6 +1080,50 @@
           },
           "requestTemplates" : {
             "application/json" : "{\n  \"id\" : \"$input.params('id')\"\n}"
+          }
+        }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "init_diagnosticsOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
           }
         }
       }
@@ -882,7 +1183,58 @@
             "application/json" : "{\n  \"id\" : \"$input.params('id')\"\n}"
           }
         }
+      },
+      "options" : {
+        "tags" : [ "CORS" ],
+        "summary" : "CORS support",
+        "description" : "Enable CORS by returning correct headers\n",
+        "operationId" : "reset_diagnosticsOPTIONS",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Default response for CORS method",
+            "headers" : {
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "type" : "mock",
+          "requestTemplates" : {
+            "application/json" : "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods" : "'*'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              },
+              "responseTemplates" : {
+                "application/json" : "{}\n"
+              }
+            }
+          }
+        }
       }
+    }
+  },
+  "securityDefinitions" : {
+    "api_key" : {
+      "type" : "apiKey",
+      "name" : "x-api-key",
+      "in" : "header"
     }
   },
   "definitions" : {
